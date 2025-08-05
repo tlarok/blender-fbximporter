@@ -1,0 +1,3 @@
+[submodule "3rd_party/fbximporter"]
+	path = 3rd_party/fbximporter
+	url = https://github.com/tlarok/fbximporter.git
