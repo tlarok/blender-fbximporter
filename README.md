@@ -13,5 +13,7 @@ Download from the official Microsoft page:
 Guides
 So far there’s only one I made for the addon, and one for the 3ds Max version.
 For the 3ds Max one, just skip the setup part and follow the steps from the first video instead.
+
 [addon guide](https://www.youtube.com/watch?v=f0zeviw5CWE)
+
 [3ds max guide](https://www.youtube.com/watch?v=BjVqN-UMw7w)
