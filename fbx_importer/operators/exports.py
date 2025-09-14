@@ -3,6 +3,32 @@ import bmesh
 import os
 import subprocess
 import threading
+import re
+import json
+
+def append_to_json(json_path, mesh_name, new_data):
+    """
+    Merge new_data into existing JSON file without overwriting old groups.
+    - mesh_name: the key for the mesh
+    - new_data: dict like {"MyGroup": {"export_mode": 0, "weights": [ ... ]}}
+    """
+
+    if os.path.exists(json_path):
+        with open(json_path, "r", encoding="utf-8") as f:
+            content = json.load(f)
+    else:
+        content = {}
+
+    if mesh_name not in content:
+        content[mesh_name] = {}
+
+    # Merge each group into the mesh
+    for group_name, group_data in new_data.items():
+        content[mesh_name][group_name] = group_data
+
+    with open(json_path, "w", encoding="utf-8") as f:
+        json.dump(content, f, indent=4, ensure_ascii=False)
+
 
 class ExportVertexGroupWeightsOperator(bpy.types.Operator):
     bl_idname = "mesh.export_vertex_group_weights"
@@ -38,7 +64,7 @@ class ExportVertexGroupWeightsOperator(bpy.types.Operator):
             bm.free()
             return {'CANCELLED'}
 
-        loop_weights = []  # List of (uv_index, hex_weight)
+        loop_weights = []  # List of (uv_index, weight)
 
         uv_index = 0
         for face in bm.faces:
@@ -53,8 +79,7 @@ class ExportVertexGroupWeightsOperator(bpy.types.Operator):
                     weight = vgroup.weight(vert.index)
                 except RuntimeError:
                     weight = 0.0
-                hex_value = weight
-                loop_weights.append((uv_index, hex_value))
+                loop_weights.append((uv_index, weight))
                 uv_index += 1
 
         bm.free()
@@ -70,32 +95,26 @@ class ExportVertexGroupWeightsOperator(bpy.types.Operator):
         export_dir = os.path.join(os.path.dirname(blend_path), "export_data/floatchannels")
         os.makedirs(export_dir, exist_ok=True)
 
-        filename = f"{obj.name}_{vg_name}.txt"
-        filepath = os.path.join(export_dir, filename)
-        
-        props = context.scene.uv_export_props
-        export_mode = props.export_type
-        
-        clamp_min = context.scene.uv_export_props.clamp_min
-        clamp_max = context.scene.uv_export_props.clamp_max
-        
         export_mode_int = {
             'FLOAT': 0,
             'DISTANCE': 1,
             'ANGLE': 2
-        }[export_mode]
-                
-        try:
-            with open(filepath, 'w') as f:
-                f.write(f"{export_mode_int}\n")
-                for uv_idx, hex_weight in loop_weights:
-                    w = (hex_weight * (clamp_max - clamp_min)) + clamp_min
-                    f.write(f"{round(w, 5)}\n")
-        except Exception as e:
-            self.report({'ERROR'}, f"Failed to write file: {str(e)}")
-            return {'CANCELLED'}
+        }[props.export_type]
 
-        self.report({'INFO'}, f"Exported {len(loop_weights)} UV weights to {filepath}")
+        clamp_min = props.clamp_min
+        clamp_max = props.clamp_max
+
+        # Compute weights
+        weights = [(w * (clamp_max - clamp_min)) + clamp_min for _, w in loop_weights]
+
+        # Include export mode inside the vertex group
+        data = {vg_name: {"export_mode": export_mode_int, "weights": weights}}
+
+        # Write to weight_groups.json
+        json_path = os.path.join(export_dir, "weight_groups.json")
+        append_to_json(json_path, obj.name, data)
+
+        self.report({'INFO'}, f"Exported {len(weights)} weights for mesh '{obj.name}'")
         return {'FINISHED'}
 
 
@@ -132,8 +151,7 @@ class UVIndexExtractorOperator(bpy.types.Operator):
         export_dir = os.path.join(os.path.dirname(blend_path), "export_data/selectionsets")
         os.makedirs(export_dir, exist_ok=True)
 
-        filename = obj.name + "_" + filename
-        output_path = os.path.join(export_dir, filename)
+
         mesh = obj.data
         bm = bmesh.new()
         bm.from_mesh(mesh)
@@ -172,16 +190,23 @@ class UVIndexExtractorOperator(bpy.types.Operator):
 
             if uv_entries:
                 vertex_uv_map[vert.index] = uv_entries
+        
+        group_name = props.filename.strip()
+        
+        if not group_name:
+            self.report({'ERROR'}, "Filename (group name) cannot be empty")
+            return {'CANCELLED'}
 
-        with open(output_path, 'w') as f:
-            for vtx_idx, uv_refs in vertex_uv_map.items():
-                f.write(f"{vtx_idx}: ")
-                for uv_idx, face_idx in uv_refs:
-                    f.write(f"{uv_idx} ")
-                f.write("\n")
+        # Convert vertex_uv_map into JSON-serializable format under mesh and group
+        mesh_data = {group_name: {str(vtx_idx): [uv_idx for uv_idx, _ in uv_refs]
+                                  for vtx_idx, uv_refs in vertex_uv_map.items()}}
+
+        # Write into one big JSON file
+        json_path = os.path.join(export_dir, "uv_indices.json")
+        append_to_json(json_path, obj.name, mesh_data)
 
         bm.free()
-        self.report({'INFO'}, f"UV indices saved to: {output_path}")
+        self.report({'INFO'}, f"UV indices saved to: {json_path}")
         return {'FINISHED'}
 
 
