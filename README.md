@@ -138,7 +138,6 @@ Vertex groups are float-based selections used when non-uniform values are requir
 To export a vertex group:
 
 * Create a vertex group on the mesh
-* Enable **Export Normalize**
 * Set **Min Export Value** and **Max Export Value**
 * Select the **Weight Group** to export
 * Choose a **Weight Type**
@@ -151,6 +150,8 @@ Available weight types:
   Used for modifiers.
 * **Angle**
   Used for angle-based modifiers.
+
+* Press a **Export Vertex Group(UV Oder)**
 
 The data will be saved to:
 
