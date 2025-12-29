@@ -409,7 +409,7 @@ After selecting the desired values, press **OK**. This will create a basic cloth
 
 ### Thick Simple Clothing Simulation (Two Mesh)
 
-This clothing type uses a set of 2 meshes for simulation, where one is used for simulation and the second is used for deforming by the first. A window will appear with the following options:
+This clothing type uses a set of 2 meshes for simulation, where one is used for simulation and the another is used for deforming by the first. A window will appear with the following options:
 
 * **Display Mesh**: The mesh you want to deform.
 * **Deform Verts**: Select the vertices to deform.
