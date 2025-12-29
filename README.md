@@ -21,6 +21,28 @@ For the 3ds Max users, just skip the setup part and follow the steps from the se
 
 ---
 
+## Quick Search Steps
+
+* [Setup](#setup)
+* [Usage](#usage)
+* [Preparation](#preparation)
+* [Setting Up the Mesh for Simulation](#setting-up-the-mesh-for-simulation)
+* [Workflow](#workflow)
+* [Preview Cloth](#preview-the-cloth)
+* [Exporting](#exporting-the-clothing-file)
+* [Troubleshooting](#troubleshooting)
+
+## Essention Tools
+* [resources](https://drive.google.com/file/d/190iheSf0UHfU0XdSG0hd7ueUEtLxtpyP/view)
+* [WitchyBND](https://github.com/ividyon/WitchyBND), keep in mind that latest version still doesnt work with bloodborne tpf files so use that one in the meanwhile [WitchyBND](https://github.com/ividyon/WitchyBND/releases/tag/v2.16.0.2)
+* [FbxImporter](https://github.com/The12thAvenger/FbxImporter)
+* [FLVER_Editor](https://github.com/Pear0533/FLVER_Editor)
+* [DS3HavokConverter](https://github.com/The12thAvenger/DS3HavokConverter)
+* [Discord Soulsmodding Serv With Some Tools ?ServerName?](https://discord.gg/emk4E6ny)
+* [hkxpackbb](https://discord.com/channels/529802828278005773/529900741998149643/699509305929629849)
+* [hkxpack](https://discord.com/channels/529802828278005773/529900741998149643/1187076379116839033)
+
+
 ## Setup
 
 Start by configuring the tool and its core features.
@@ -313,6 +335,9 @@ After selecting the desired values, press **OK**. This will create a basic cloth
 3. **Disable Tangents and Bitangents**
    After the skin transition is created, go back to **Operators**, select **[skin]**, and in **SkinOp**, disable the **Tangents** and **Bitangents** checkboxes.
 
+### Next step
+   * [Preview Cloth](#preview-the-cloth)
+
 ---
 
 ### Thick Simple Clothing Simulation (One Mesh)
@@ -403,7 +428,8 @@ After selecting the desired values, press **OK**. This will create a basic cloth
 3. **Disable Tangents and Bitangents**
    After the skin transition is created, go back to **Operators**, select **[skin]**, and in **SkinOp**, disable the **Tangents** and **Bitangents** checkboxes.
 
----
+### Next step
+   * [Preview Cloth](#preview-the-cloth)
 
 ---
 
@@ -484,6 +510,10 @@ After selecting the desired values, press **OK**. This will create a basic cloth
 2. **Create Skin Transition**
    For **Elden Ring** or **Elden Ring Nightreign** (or newer versions), go to the **Scripts** tab and select **Wizard Browser...**. Then choose **Create Skin Transition**. In the new pop-up, select the mesh, choose **Simulated State** (usually **`#01#`**), and press **Create Skin Transitions**.
 
+### Next step
+   * [Preview Cloth](#preview-the-cloth)
+
+
 ---
 
 
@@ -491,5 +521,84 @@ After selecting the desired values, press **OK**. This will create a basic cloth
 
 At the top of the window, you will see a **monitor icon**. Click on it to preview your cloth simulation and check if everything was set up correctly. If changes are needed, you can go back and adjust the settings.
 
+---
+
+### Exporting Clothing
+
+Now you can press **Ctrl + S** to save your setup and close the window to move on to the Filter Manager.
+
+Next, you need to import your mesh into **FLVER** with the correct buffer exposed to Havok in order to ensure that the cloth will apply correctly in the game. For this, you can use the **12thAvenger's tool**, [FbxImporter](https://github.com/The12thAvenger/FbxImporter).
+
+**Important**: Always import meshes in the correct order to avoid issues. If you reimport meshes into an already created FLVER, there could be problems due to incorrect ordering.
+
+### Import Meshes in the Correct Order:
+
+1. **First All Clothing Meshes Materials**:
+
+   * **Bloodborne**: `p[arsn]_cloth.mtd`
+   * **Dark Souls 3**: `c[arsn]_cloth.mtd`
+   * **Elden Ring and Elden Ring Nightreign**: `c[amsn]_cloth.matxml`
+
+2. **Non Clothing Meshes Materials**:
+   * **Bloodborne**: `p[arsn].mtd`
+   * **Dark Souls 3**: `c[arsn].mtd`
+   * **Elden Ring and Elden Ring Nightreign**: `c[amsn].matxml`
+
+**Note**: The FLVER file must come from the specific game you're working with. Using a FLVER from a different game type will not work.
+
+Once your model is properly imported, you can move on to exporting the clothing file.
+
+### Exporting the Clothing File
+
+1. Go to **Execute Cloth Setup** in the Filter Manager.
+2. If the field is empty, type anything in it to enable the **...** button, allowing you to select the FLVER file you imported the model into.
+3. After selecting the FLVER file, go to **Write to Platform**.
+
+### Write to Platform
+
+Here, the process differs between games:
+
+* **For Elden Ring and Elden Ring Nightreign**:
+
+  * Set the **Format** to **MSVC x64, XBoxOne, Switch64_win**.
+  * After that, press **Run Configuration**.
+  * Keep in mind to export the file into the same folder as the scene (i.e., the `export_data` folder) as Havok can have issues if placed elsewhere.
+
+* **For Bloodborne and Dark Souls 3**:
+
+  * In **Filter Manager**, under **Execute Cloth Setup**, type anything in the field to enable the **...** button to select the FLVER file.
+  * Set **Format** to **XML** and export it to the same folder as the scene (the `export_data` folder).
+  * Use the **12thAvenger's tool** [DS3HavokConverter](https://github.com/The12thAvenger/DS3HavokConverter) to convert the XML into Havok 2014 XML format (since Bloodborne and Dark Souls 3 use Havok 2014, and newer versions won’t work).
+
+  After that, you’ll need to convert the XML into **binary/hkx** format using **hkxpack**, which can be found on the Discord server ([?ServerName?](https://discord.gg/emk4E6ny)).
+
+  There are two versions of hkxpack:
+
+  * For **Dark Souls 3**: [hkxpack](https://discord.com/channels/529802828278005773/529900741998149643/1187076379116839033)
+  * For **Bloodborne**: [hkxpackbb](https://discord.com/channels/529802828278005773/529900741998149643/699509305929629849)
+
+  After running the XML through the tool, you'll get the required hkx clothing file.
+
+### Continue with the Process for All Games
+
+Once you have the hkx file ready, you need to obtain the **DCX model file** containing the clothing. You can then copy the **CLM2 file** and the file IDs into the `_witchy-bnd4.xml` for your DCX file. This could be an armor or any other item that contains the hkx and CLM2 file, as the CLM2 is essential for the physics to work in the game.
+
+### Packing the DCX
+
+Once you've packed everything into the DCX, go ahead and test the physics in the game to make sure everything works correctly.
 
 ---
+
+### Troubleshooting
+
+Here are some possible issues you might encounter during the process:
+
+1. **Export Doesn’t Execute**:
+
+   * **Transformation not applied**: If the export doesn’t execute properly, it may be due to transformations. The addon automatically applies all transformations, but the **12thAvenger's tool** does not. To avoid mismatches, in Blender, select all display meshes that will be in the FLVER, then go to the top menu: **Object → Apply → All Transformations**.
+
+2. **Cloth Weirdly deformed**:
+
+   * **Non-normalized weight paint**: If the mesh looks weird or deformed in the game, it’s likely because the weight paint wasn’t normalized. To fix this, go through all your display meshes and proxy models, then go into **Weight Paint Mode**, and click on the top menu: **Weight → Normalize All**. Re-export the scene and re-export the cloth after that.
+
+If you encounter any other unknown issues that aren't covered in this guide, feel free to reach out to me in the Discord server. My username is **Tlarok**.
