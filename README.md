@@ -34,7 +34,7 @@ For the 3ds Max users, just skip the setup part and follow the steps from the se
 
 ## Essention Tools
 * [resources](https://drive.google.com/file/d/190iheSf0UHfU0XdSG0hd7ueUEtLxtpyP/view)
-* [WitchyBND](https://github.com/ividyon/WitchyBND), keep in mind that latest version still doesnt work with bloodborne tpf files so use that one in the meanwhile [WitchyBND](https://github.com/ividyon/WitchyBND/releases/tag/v2.16.0.2)
+* [WitchyBND](https://github.com/ividyon/WitchyBND), keep in mind that latest version still doesn't work with bloodborne tpf files so use that one in the meanwhile [WitchyBND](https://github.com/ividyon/WitchyBND/releases/tag/v2.16.0.2)
 * [FbxImporter](https://github.com/The12thAvenger/FbxImporter)
 * [FLVER_Editor](https://github.com/Pear0533/FLVER_Editor)
 * [DS3HavokConverter](https://github.com/The12thAvenger/DS3HavokConverter)
