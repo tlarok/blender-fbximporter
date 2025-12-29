@@ -109,7 +109,7 @@ This will create an entry in:
 
 ---
 
-### Vertex Groups
+### Vertex Selection Groups
 
 Vertex groups are float-based selections used when non-uniform values are required.
 
@@ -201,6 +201,295 @@ Once everything is set up, export the scene by pressing:
 
 This will export the scene and automatically launch the Havok Filter Manager with your data loaded.
 
-you need specific setup there which you can get here - [file](https://github.com/tlarok/blender-fbximporter/blob/main/defaults.hko)
+For the specific setup required, you can get it from [here](https://github.com/tlarok/blender-fbximporter/blob/main/defaults.hko).
+
+Once the setup is loaded, the configuration will change, and you should see the following options:
+
+* **Create Tangents**
+* **Create Skeleton**
+* **Create Cloth Collidables**
+* **Setup Cloth**
+* **Execute Cloth Setup (Ds3)**
+* **Prune Types**
+* **Write to Platform**
+
+### Step-by-step Setup
+
+1. **Choose `Setup Cloth`**
+   In the new window on the right, click **`Launch Cloth Setup Tool`**. Ensure that `Cloth Setup Tool Mode` is set to **`Standalone`**. **`Modal`** technically works but is not recommended.
+
+2. **Cloth Setup Tool**
+   When the Cloth Setup Tool opens, you will see an empty cloth entity. You can delete this entity. Next, click on the **`Script`** tab at the top, and select **`Wizard Browser...`**. This will pop up a window with different cloth simulation types. While you can create most of them manually, this guide will cover only the following types:
+
+   * **[Simple](#character-simple-clothing-simulation)**
+   * **[Thick Single Mesh](#thick-simple-clothing-simulation-one-mesh)**
+   * **[Two Mesh Simulation](#thick-simple-clothing-simulation-two-mesh)**
+
+---
+
+### Character Simple Clothing Simulation
+
+This clothing type uses a set mesh for simulation and its own vertices for cloth simulation. When you select it, a window will appear with the following options:
+
+* **Mesh**: The mesh you want to simulate.
+* **Skeleton**: The skeleton mesh that the clothing is rigged to.
+
+#### Simulation Options:
+
+* **Simulation Verts**: You can select the vertices to simulate.
+
+* **Fixed Particles**: These are parts that are restricted from movement to prevent the mesh from flying away. A warning will appear if you don’t include all necessary fixed particles, but it will still work. It is **not recommended** to skip this.
+
+* **Both above include:**
+
+  * `<ALL>`
+  * `<NONE>`
+  * Or custom selection groups you made beforehand.
+
+* **Max Distance**: This constraint limits the distance the vertices can move. You can also use the vertex group export with the distance type.
+
+* **Add Stretch Links**: If enabled, this will add additional Stretch Link constraints to counteract stretching caused by gravity.
+
+After selecting the desired values, press **OK**. This will create a basic cloth setup that you can adjust.
+
+---
+
+### Configuring the Cloth Simulation
+
+1. **Rename `Simulate` to `#01#`**
+   If you're working with **Elden Ring** or **Elden Ring Nightreign**, right-click on **States**, and select **New** to create a new state. Rename it to **`#00#`**.
+
+2. **Adjust Skin Settings**
+   Go to **Operator** and select `mesh_name + ' SkinOp'`. In the right window, uncheck the **`Tangents`** and **`Bitangents`** checkboxes next to the **Skin** section.
+
+3. **Rename the Transform Set**
+   Under **Transform Sets**, click **Master TransformSet** and rename **`Master TransformSet`** to **Master**. If the skeleton name is not **Master TransformSet**, go to Blender and rename the armature to **Master**, then re-export the scene over again.
+
+4. **Set Gravity and Damping**
+   In the **Sim Cloths** section, under the mesh name **`SimCloth`**, go to **Simulation Properties**. Change **Gravity** to the desired value (usually negative Y/Middle), and increase **Damping** (default is 0.001). Damping affects the speed of the simulation, with values closer to 1 making it faster.
+
+5. **Adjust Constraints**
+   Under **Constraints Options** inside **SimCloth**, you’ll find the **Mass** setting, which controls the strength of constraints, the bigger it is the less constraints effect simulation. Set it to **0.33** (or higher depending on preference). You will also see the following constraints already included:
+
+   * **Standard Links**: Links that connect adjacent particles and maintain their relative distance.
+   * **Stretch Links**: Specialized links to counteract stretching.
+   * **Local Range Constraints**: Limits the movement of particles to a defined area.
+
+   You may want to add optional constraints such as:
+
+   * **Bend Stiffness Constraints**: Prevents the cloth from folding.
+   * **Volume Constraints**: Attempts to preserve the original shape of the cloth.
+   * **Transition Constraints**: Smooths the transition between animated and simulated positions.
+
+6. **Add Constraints**
+   Add **Bend Stiffness** to prevent cloth from self-colliding. For Elden Ring or Elden Ring Nightreign, also add **Transition Constraints**.
+
+7. **Adjust Bend Stiffness**
+   Set the **Bend Stiffness** to a value between **1** and **0.0001**, depending on how stiff or flexible you want the cloth to be.
+
+8. **Set Collision Options**
+   Under **Simulation Cloth** > **Collision Options**, set the **Radius** (recommended values: **0.02** or **0.01**) and keep the **Friction** at default, or adjust as needed.
+
+9. **Add Collidables**
+   If the collidables are not showing up, click the right file icon, select the desired collidables, and indicate which vertices the mesh will collide with if needed.
+
+10. **Set Particle-Force Interaction**
+    In the **Advanced Option** section of **Simulation Cloth**, set the **Total Mass** to **10** (this controls how easily the mesh will be moved by world wind).
+
+---
+
+### Finalizing the Simulation
+
+1. **Simulation**
+   Go back to **Operators**, open **Simulate**, and click **Simulate**. Under **Constraint Execution (Advanced)**, select **Smart Iterate** and adjust the complexity based on mesh complexity:
+
+   * **1** for low-poly meshes
+   * **3** for higher poly meshes
+   * Use **Thick Clothing (2 meshes)** for very high-poly meshes.
+
+2. **Create Skin Transition**
+   For **Elden Ring** or **Elden Ring Nightreign** (or newer versions), go to the **Scripts** tab and select **Wizard Browser...**. Then choose **Create Skin Transition**. In the new pop-up, select the mesh, choose **Simulated State** (usually **`#01#`**), and press **Create Skin Transitions**.
+
+3. **Disable Tangents and Bitangents**
+   After the skin transition is created, go back to **Operators**, select **[skin]**, and in **SkinOp**, disable the **Tangents** and **Bitangents** checkboxes.
+
+---
+
+### Thick Simple Clothing Simulation (One Mesh)
+
+This clothing type uses a set mesh for simulation, where the vertices selected for deformation will be influenced by the simulated particles of the same mesh. When you select this option, a window will appear with the following options:
+
+* **Mesh**: The mesh you want to simulate.
+* **Skeleton**: The skeleton mesh that the clothing is rigged to.
+
+#### Simulation Options:
+
+* **Simulation Verts**: Select the vertices to simulate.
+
+* **Deformed Verts**: Select the vertices to deform.
+
+* **Fixed Particles**: These are parts that are restricted from movement to prevent the mesh from flying away. A warning will appear if you don’t include all necessary fixed particles, but it will still work. It is **not recommended** to skip this.
+
+* **All of the above include**:
+
+  * `<ALL>`
+  * `<NONE>`
+  * Or custom selection groups you made beforehand.
+
+* **Max Distance**: This constraint limits the distance the simulated vertices can move. You can also use the vertex group export with the distance type.
+
+* **Add Stretch Links**: If enabled, this will add additional Stretch Link constraints to counteract stretching caused by gravity.
+
+After selecting the desired values, press **OK**. This will create a basic cloth setup that you can adjust.
+
+---
+
+### Configuring the Cloth Simulation
+
+1. **Rename `Simulate` to `#01#`**
+   If you're working with **Elden Ring** or **Elden Ring Nightreign**, right-click on **States**, and select **New** to create a new state. Rename it to **`#00#`**.
+
+2. **Adjust Skin Settings**
+   Go to **Operator** and select `Skin`. In the right window, uncheck the **`Tangents`** and **`Bitangents`** checkboxes next to the **Skin** section. Apply the same process to the **`Deform Display Mesh`**.
+
+3. **Rename the Transform Set**
+   Under **Transform Sets**, click **Master TransformSet** and rename **`Master TransformSet`** to **Master**. If the skeleton name is not **Master TransformSet**, go to Blender and rename the armature to **Master**, then re-export the scene.
+
+4. **Set Gravity and Damping**
+   In the **Sim Cloths** section, under the mesh name **`SimCloth`**, go to **Simulation Properties**. Change **Gravity** to the desired value (usually negative Y/Middle), and increase **Damping** (default is 0.001). Damping affects the speed of the simulation, with values closer to 1 making it faster.
+
+5. **Adjust Constraints**
+   Under **Constraints Options** inside **SimCloth**, you’ll find the **Mass** setting, which controls the strength of constraints. The higher the value, the less effect constraints have on the simulation. Set it to **0.33** (or higher depending on preference). The default constraints already included are:
+
+   * **Standard Links**: Links that connect adjacent particles and maintain their relative distance.
+   * **Stretch Links**: Specialized links to counteract stretching.
+   * **Local Range Constraints**: Limits the movement of particles to a defined area.
+
+   You may want to add optional constraints such as:
+
+   * **Bend Stiffness Constraints**: Prevents the cloth from folding.
+   * **Volume Constraints**: Attempts to preserve the original shape of the cloth.
+   * **Transition Constraints**: Smooths the transition between animated and simulated positions.
+
+6. **Add Constraints**
+   Add **Bend Stiffness** to prevent cloth from self-colliding. For Elden Ring or Elden Ring Nightreign, also add **Transition Constraints**.
+
+7. **Adjust Bend Stiffness**
+   Set the **Bend Stiffness** to a value between **1** and **0.0001**, depending on how stiff or flexible you want the cloth to be.
+
+8. **Set Collision Options**
+   Under **Simulation Cloth** > **Collision Options**, set the **Radius** (recommended values: **0.02** or **0.01**) and keep the **Friction** at default, or adjust as needed.
+
+9. **Add Collidables**
+   If the collidables are not showing up, click the right file icon, select the desired collidables, and indicate which vertices the mesh will collide with if needed.
+
+10. **Set Particle-Force Interaction**
+    In the **Advanced Option** section of **Simulation Cloth**, set the **Total Mass** to **10** (this controls how easily the mesh will be moved by world wind).
+
+---
+
+### Finalizing the Simulation
+
+1. **Simulation**
+   Go back to **Operators**, open **Simulate**, and click **Simulate**. Under **Constraint Execution (Advanced)**, select **Smart Iterate** and adjust the complexity based on mesh complexity:
+
+   * **1** for low-poly meshes
+   * **3** for higher poly meshes
+   * Use **Thick Clothing (2 meshes)** for very high-poly meshes.
+
+2. **Create Skin Transition**
+   For **Elden Ring** or **Elden Ring Nightreign** (or newer versions), go to the **Scripts** tab and select **Wizard Browser...**. Then choose **Create Skin Transition**. In the new pop-up, select the mesh, choose **Simulated State** (usually **`#01#`**), and press **Create Skin Transitions**.
+
+3. **Disable Tangents and Bitangents**
+   After the skin transition is created, go back to **Operators**, select **[skin]**, and in **SkinOp**, disable the **Tangents** and **Bitangents** checkboxes.
+
+---
+
+---
+
+### Thick Simple Clothing Simulation (Two Mesh)
+
+This clothing type uses a set of 2 meshes for simulation, where one is used for simulation and the second is used for deforming by the first. A window will appear with the following options:
+
+* **Display Mesh**: The mesh you want to deform.
+* **Deform Verts**: Select the vertices to deform.
+* **Simulate Mesh**: The mesh you want to simulate.
+* **Simulation Verts**: Select the vertices to simulate.
+* **Skeleton**: The skeleton mesh that the clothing is rigged to.
+
+#### Simulation Options:
+
+* **Fixed Particles**: These are parts that are restricted from movement to prevent the mesh from flying away. A warning will appear if you don’t include all necessary fixed particles, but it will still work. It is **not recommended** to skip this.
+* **All of the Verts above include**:
+  * `<ALL>`
+  * `<NONE>`
+  * Or custom selection groups you made beforehand.
+* **Max Distance**: This constraint limits the distance the simulated vertices can move. You can also use the vertex group export with the distance type.
+* **Add Stretch Links**: If enabled, this will add additional Stretch Link constraints to counteract stretching caused by gravity.
+
+After selecting the desired values, press **OK**. This will create a basic cloth setup that you can adjust.
+
+---
+
+### Configuring the Cloth Simulation
+
+1. **Rename `Simulate` to `#01#`**
+   If you're working with **Elden Ring** or **Elden Ring Nightreign**, right-click on **States**, and select **New** to create a new state. Rename it to **`#00#`**.
+
+2. **Adjust Skin Settings**
+   Go to **Operator** and select `Skin`. In the right window, uncheck the **`Tangents`** and **`Bitangents`** checkboxes next to the **Skin** section. Apply the same process to the **`Deform Display Mesh`**.
+
+3. **Rename the Transform Set**
+   Under **Transform Sets**, click **Master TransformSet** and rename **`Master TransformSet`** to **Master**. If the skeleton name is not **Master TransformSet**, go to Blender and rename the armature to **Master**, then re-export the scene.
+
+4. **Set Gravity and Damping**
+   In the **Sim Cloths** section, under the mesh name **`SimCloth`**, go to **Simulation Properties**. Change **Gravity** to the desired value (usually negative Y/Middle), and increase **Damping** (default is 0.001). Damping affects the speed of the simulation, with values closer to 1 making it faster.
+
+5. **Adjust Constraints**
+   Under **Constraints Options** inside **SimCloth**, you’ll find the **Mass** setting, which controls the strength of constraints. The higher the value, the less effect constraints have on the simulation. Set it to **0.33** (or higher depending on preference). The default constraints already included are:
+   - **Standard Links**: Links that connect adjacent particles and maintain their relative distance.
+   - **Stretch Links**: Specialized links to counteract stretching.
+   - **Local Range Constraints**: Limits the movement of particles to a defined area.
+
+   You may want to add optional constraints such as:
+   - **Bend Stiffness Constraints**: Prevents the cloth from folding.
+   - **Volume Constraints**: Attempts to preserve the original shape of the cloth.
+   - **Transition Constraints**: Smooths the transition between animated and simulated positions.
+
+6. **Add Constraints**
+   Add **Bend Stiffness** to prevent cloth from self-colliding. For Elden Ring or Elden Ring Nightreign, also add **Transition Constraints**.
+
+7. **Adjust Bend Stiffness**
+   Set the **Bend Stiffness** to a value between **1** and **0.0001**, depending on how stiff or flexible you want the cloth to be.
+
+8. **Set Collision Options**
+   Under **Simulation Cloth** > **Collision Options**, set the **Radius** (recommended values: **0.02** or **0.01**) and keep the **Friction** at default, or adjust as needed.
+
+9. **Add Collidables**
+   If the collidables are not showing up, click the right file icon, select the desired collidables, and indicate which vertices the mesh will collide with if needed.
+
+10. **Set Particle-Force Interaction**
+    In the **Advanced Option** section of **Simulation Cloth**, set the **Total Mass** to **10** (this controls how easily the mesh will be moved by world wind).
+
+---
+
+### Finalizing the Simulation
+
+1. **Simulation**
+   Go back to **Operators**, open **Simulate**, and click **Simulate**. Under **Constraint Execution (Advanced)**, select **Smart Iterate** and adjust the complexity based on mesh complexity:
+   - **1** for low-poly meshes
+   - **3** for higher poly meshes
+   - Use **Thick Clothing (2 meshes)** for very high-poly meshes.
+
+2. **Create Skin Transition**
+   For **Elden Ring** or **Elden Ring Nightreign** (or newer versions), go to the **Scripts** tab and select **Wizard Browser...**. Then choose **Create Skin Transition**. In the new pop-up, select the mesh, choose **Simulated State** (usually **`#01#`**), and press **Create Skin Transitions**.
+
+---
+
+
+### Preview the Cloth
+
+At the top of the window, you will see a **monitor icon**. Click on it to preview your cloth simulation and check if everything was set up correctly. If changes are needed, you can go back and adjust the settings.
+
 
 ---
