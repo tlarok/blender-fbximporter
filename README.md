@@ -259,7 +259,7 @@ Once the setup is loaded, the configuration will change, and you should see the 
 * **Prune Types**
 * **Write to Platform**
 
-<img width="1003" height="727" alt="Без имени-2" src="https://github.com/user-attachments/assets/0e6f8bab-c7fe-4ceb-9bf6-e7ddf153f87a" />
+<img width="1003" height="727" alt="Без имени-2" src="https://github.com/user-attachments/assets/cd46f059-4068-4455-8c78-2a5847edfbb5" />
 
 ### Step-by-step Setup
 
@@ -273,9 +273,15 @@ Once the setup is loaded, the configuration will change, and you should see the 
    * **[Thick Single Mesh](#thick-simple-clothing-simulation-one-mesh)**
    * **[Two Mesh Simulation](#thick-simple-clothing-simulation-two-mesh)**
 
+<img width="398" height="692" alt="image" src="https://github.com/user-attachments/assets/caca05a3-e7cf-4a51-bade-06ef16c6eb99" />
+
+<img width="758" height="602" alt="Без имени-2" src="https://github.com/user-attachments/assets/e728bdc3-8468-492a-a291-a62b9ebc4b68" />
+
 ---
 
 ### Character Simple Clothing Simulation
+
+<img width="621" height="360" alt="Без имени-2" src="https://github.com/user-attachments/assets/8a18bb89-981a-4d53-919a-fd3056b3ce8f" />
 
 This clothing type uses a set mesh for simulation and its own vertices for cloth simulation. When you select it, a window will appear with the following options:
 
@@ -367,6 +373,8 @@ After selecting the desired values, press **OK**. This will create a basic cloth
 ---
 
 ### Thick Simple Clothing Simulation (One Mesh)
+
+<img width="802" height="442" alt="Без имени-2" src="https://github.com/user-attachments/assets/162c1372-e7ba-4d92-9ca6-135396ba3ab7" />
 
 This clothing type uses a set mesh for simulation, where the vertices selected for deformation will be influenced by the simulated particles of the same mesh. When you select this option, a window will appear with the following options:
 
@@ -460,6 +468,8 @@ After selecting the desired values, press **OK**. This will create a basic cloth
 ---
 
 ### Thick Simple Clothing Simulation (Two Mesh)
+
+<img width="807" height="458" alt="Без имени-2" src="https://github.com/user-attachments/assets/291c7c6b-238e-4543-a81b-19db4ec3e326" />
 
 This clothing type uses a set of 2 meshes for simulation, where one is used for simulation and the another is used for deforming by the first. A window will appear with the following options:
 
