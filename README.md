@@ -41,11 +41,16 @@ For the 3ds Max users, just skip the setup part and follow the steps from the se
 * [Discord Soulsmodding Serv With Some Tools ?ServerName?](https://discord.gg/emk4E6ny)
 * [hkxpackbb](https://discord.com/channels/529802828278005773/529900741998149643/699509305929629849)
 * [hkxpack](https://discord.com/channels/529802828278005773/529900741998149643/1187076379116839033)
+* [Aqua Toolset](https://github.com/Shadowth117/Aqua-Toolset)
 
 
 ## Setup
 
 Start by configuring the tool and its core features.
+
+After installing the addon, you will see a new tab in the right tools sidebar (press **N** if you don’t see it) called **UV Tools**. Once opened, you will see the following two fields:
+
+<img width="737" height="122" alt="Без имени-2" src="https://github.com/user-attachments/assets/f39ae368-9b80-46d7-ad69-10e46e1b86ba" />
 
 ### Standalone Filter Manager Path
 
@@ -80,16 +85,20 @@ There is also a possibility of supporting **Dark Souls II (SOTFS)** and **Sekiro
 
 First, you need an **armature/skeleton** that the mesh is already rigged to, along with a **FLVER** file that uses the same armature.
 
-For player characters, it is recommended to extract the skeleton from
-`fc_m_0000.partsbnd.dcx`.
+For player characters, it's recommended to extract the skeleton from `fc_m_0000.partsbnd.dcx`. Since FLVER files cannot be imported directly without external tools or addons, user suggested using the [Aqua Toolset](https://github.com/Shadowth117/Aqua-Toolset) to export the model as an FBX, which can then be imported into Blender.
 
 > FromSoftware armatures are typically named `Master`.
 > Make sure the armature in your Blender scene is renamed to `Master`, or the created physics will not work correctly.
 
-Next, prepare the mesh you are creating physics or clothing for. It must be rigged to the same armature.
+Next, prepare the mesh you are creating physics or clothing for. It must be rigged to the same armature. Also mesh must be triangular, otherwise mesh will have missmatch with model you will later import in flver.
 
-* Enable **Auto Normalize** in Blender’s weight painting settings, **or**
-* After finishing weight painting, go to **Weight Paint Mode → Weights → Normalize All**
+* Enable **Auto Normalize** in Blender in weight painting mode in settings in the right
+
+<img width="392" height="503" alt="image" src="https://github.com/user-attachments/assets/af97c2aa-41e0-4428-a9a0-27bfdcd75cbc" />
+
+* **Or** after finishing weight painting, go to **Weight Paint Mode → Weights → Normalize All**
+
+<img width="866" height="435" alt="image" src="https://github.com/user-attachments/assets/35262424-060e-4b06-bad2-9032a069699a" />
 
 There is also an option to use a **proxy/simulation mesh** (a simplified version of your model) for physics simulation and transfer its motion to the main mesh. This is useful if:
 
@@ -124,9 +133,11 @@ To create them:
 4. Fill in the **Section Name**
 5. Press **Save UV Indices**
 
+<img width="927" height="637" alt="image" src="https://github.com/user-attachments/assets/35c8c081-eece-426f-b85e-20de68185158" />
+
 This will create an entry in:
 
-* `export_data/selectionsets/uv_indices.json`, or
+* `blend_path/export_data/selectionsets/uv_indices.json`, or
 * `optional_export_path/selectionsets/uv_indices.json`
 
 ---
@@ -153,9 +164,11 @@ Available weight types:
 
 * Press a **Export Vertex Group(UV Oder)**
 
+<img width="1323" height="780" alt="image" src="https://github.com/user-attachments/assets/296a2af9-0eaa-46f6-9ec3-2359438d6ff2" />
+
 The data will be saved to:
 
-* `export_data/floatchannels/weight_groups.json`, or
+* `blend_path/export_data/floatchannels/weight_groups.json`, or
 * `optional_export_path/floatchannels/weight_groups.json`
 
 ---
@@ -173,6 +186,8 @@ Collidable shapes are used to restrict or guide movement.
 * Convex Geometry
 * Convex Heightfield
 
+<img width="641" height="348" alt="image" src="https://github.com/user-attachments/assets/b371e5eb-c0d0-446b-bf74-4045e0e354ea" />
+
 #### Notes on Collidables
 
 * Collidable objects use the prefix `collision_<type>` so the addon can identify and skip them during processing.
@@ -187,18 +202,24 @@ Collidable shapes are used to restrict or guide movement.
 * Assign a bone using the **Bone Selector** (if needed)
 * Press **Set Collision** to convert the mesh into the selected collision shape
 
-If the object is already a collidable, it will be updated unless a Bone Selector is set.
+<img width="403" height="197" alt="Без имени-2" src="https://github.com/user-attachments/assets/d4baba8c-cd30-4bda-be92-35d43aea7548" />
+
+If the object is already a collidable, it will be updated except a Bone Selector if already set.
 
 When selecting an **armature**, a **Place Collidable** button appears:
 
 * Select **one bone** in Edit/Pose mode → create a **sphere**
 * Select **two bones** in Edit/Pose mode → create a **capsule**
 
+<img width="1068" height="434" alt="Без имени-2" src="https://github.com/user-attachments/assets/86e2cdd4-29a7-4d32-80a9-3f9e4423bd93" />
+
+<img width="993" height="413" alt="Без имени-2" src="https://github.com/user-attachments/assets/08b03816-e216-4881-a823-4fb0e6dea8dc" />
+
 ### Capsule Resizing
 
 When a **capsule collidable mesh** is selected, additional resize options will appear.
 
-Capsules can be resized using the following controls:
+Capsules can be resized using the following control points:
 
 * **Bottom**
 * **Middle**
@@ -208,6 +229,8 @@ To resize the capsule:
 
 1. Toggle the desired controls (`Bottom`, `Middle`, and/or `Top`)
 2. Press **Resize Capsule** to apply the changes
+
+<img width="1716" height="546" alt="Без имени-2" src="https://github.com/user-attachments/assets/17b108b0-8f6f-4254-99aa-396f44da6166" />
 
 If the capsule's size choses is **uneven**, the collidable effectively becomes a **Tapered Capsule**.
 
@@ -235,6 +258,8 @@ Once the setup is loaded, the configuration will change, and you should see the 
 * **Execute Cloth Setup (Ds3)**
 * **Prune Types**
 * **Write to Platform**
+
+<img width="1003" height="727" alt="Без имени-2" src="https://github.com/user-attachments/assets/0e6f8bab-c7fe-4ceb-9bf6-e7ddf153f87a" />
 
 ### Step-by-step Setup
 
