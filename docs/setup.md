@@ -39,4 +39,4 @@ If you don’t specify an export path, the addon will automatically create an `e
 
 ???+ warning
 
-    Your Blender project must be saved somewhere on disk in order for the addon to function correctly.
+    Your Blender project must be saved somewhere on disk in order for the addon to save setup files and addon functionality.
