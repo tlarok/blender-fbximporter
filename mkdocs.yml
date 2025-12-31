@@ -1,0 +1,67 @@
+site_name: blender_fbximporter
+repo_url: https://github.com/tlarok/blender-fbximporter
+site_url: https://github.com/tlarok/blender-fbximporter  # TODO
+site_author: Tlarok
+site_description: "Blender plugin for setting up Havok cloth simulations"
+copyright: Tlarok
+theme:
+  #favicon: assets/images/logo.png
+  #logo: assets/images/logo.png
+  name: material
+  #custom_dir: docs/overrides
+  font:
+    text: Noto Sans
+  features:
+    - header.autohide
+    - navigation.tabs
+    - navigation.indexes
+    - navigation.instant
+    - navigation.tabs
+    - navigation.tracking
+    - navigation.top
+    - search.highlight
+    - search.share
+    - search.suggest
+  palette:
+    - scheme: slate
+      primary: teal
+      accent: light green
+
+nav:
+  - Home: index.md
+  - Start Here!: preface.md
+  - Setup: setup.md
+  - HowTo:
+    - Prepare your Armature: howto/armature.md
+    - Setup your simulation mesh: howto/mesh_setup.md
+    - Import your scene into Havok: howto/mesh_export.md
+    - Configure the cloth simulation:
+      - Simple: howto/sim_simple.md
+      - Thick (one mesh): howto/sim_thick_one_mesh.md
+      - Thick (two mesh): howto/sim_thick_two_mesh.md
+    - Export Simulation Results: howto/save_result.md
+  - Troubleshooting: troubleshooting.md
+
+plugins:
+  - search
+  
+markdown_extensions:
+  - pymdownx.betterem:
+      smart_enable: all
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tilde
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg

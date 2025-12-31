@@ -64,7 +64,7 @@ This allows the addon to open the Filter Manager automatically every time you ex
 This is an optional directory where all project files will be stored.
 If no path is chosen, the addon will create an `export_data` folder next to the Blender file you are working on.
 
-> **Important:** Your Blender project must be saved somewhere on disk in order for the addon to function correctly.
+???+ note**Important:** Your Blender project must be saved somewhere on disk in order for the addon to function correctly.
 
 ---
 
@@ -87,8 +87,8 @@ First, you need an **armature/skeleton** that the mesh is already rigged to, alo
 
 For player characters, it's recommended to extract the skeleton from `fc_m_0000.partsbnd.dcx`. Since FLVER files cannot be imported directly without external tools or addons, user suggested using the [Aqua Toolset](https://github.com/Shadowth117/Aqua-Toolset) to export the model as an FBX, which can then be imported into Blender.
 
-> FromSoftware armatures are typically named `Master`.
-> Make sure the armature in your Blender scene is renamed to `Master`, or the created physics will not work correctly.
+???+ noteFromSoftware armatures are typically named `Master`.
+???+ noteMake sure the armature in your Blender scene is renamed to `Master`, or the created physics will not work correctly.
 
 Next, prepare the mesh you are creating physics or clothing for. It must be rigged to the same armature. Also mesh must be triangular, otherwise mesh will have missmatch with model you will later import in flver.
 
@@ -105,7 +105,7 @@ There is also an option to use a **proxy/simulation mesh** (a simplified version
 * Your model is very high-poly
 * The mesh does not deform well during simulation
 
-> The deformed mesh will inherit the proxy/simulation mesh’s weight painting.
+???+ noteThe deformed mesh will inherit the proxy/simulation mesh’s weight painting.
 
 ---
 
@@ -234,8 +234,8 @@ To resize the capsule:
 
 If the capsule's size choses is **uneven**, the collidable effectively becomes a **Tapered Capsule**.
 
-> **Note:** Tapered Capsules are not supported by the addon.
-> For proper functionality, it is recommended to convert the collidable to **Convex Geometry**.
+???+ note**Note:** Tapered Capsules are not supported by the addon.
+???+ noteFor proper functionality, it is recommended to convert the collidable to **Convex Geometry**.
 
 ---
 
