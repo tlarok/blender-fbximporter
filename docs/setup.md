@@ -8,7 +8,7 @@
 
 ### Step 1: Install Havok
 
-1. **Install Havok** from the **Resources** folder.
+1. **Install Havok** from the **Resources** link.
 2. Run the executable file to start the installation process. During the installation, **save the installation path** somewhere for future reference.
 3. After the installation, navigate to the folder `havok_contectool\New DLL` in the **Resources** folder and copy the two `.dll` files.
 4. Go to the previously saved Havok installation path and locate the directory:
