@@ -1,6 +1,6 @@
 # Simple Clothing Simulation
 
-<img width="621" height="360" alt="Без имени-2" src="https://github.com/user-attachments/assets/8a18bb89-981a-4d53-919a-fd3056b3ce8f" />
+![simple clothing window pop up](../assets/images/simple.png)
 
 This clothing type uses a set mesh for simulation and its own vertices for cloth simulation. When you select it, a window will appear with the following options:
 

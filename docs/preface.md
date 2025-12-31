@@ -12,7 +12,8 @@ Download from the official Microsoft page:
 
 ## Essention Tools
 
-- [resources](https://drive.google.com/file/d/190iheSf0UHfU0XdSG0hd7ueUEtLxtpyP/view)
+- [Addon Itself](https://github.com/tlarok/blender-fbximporter/releases/tag/v0.2.01)
+- [Resources](https://drive.google.com/file/d/190iheSf0UHfU0XdSG0hd7ueUEtLxtpyP/view)
 - [WitchyBND](https://github.com/ividyon/WitchyBND), keep in mind that latest version still doesn't work with bloodborne tpf files so use that one in the meanwhile [WitchyBND](https://github.com/ividyon/WitchyBND/releases/tag/v2.16.0.2)
 - [FbxImporter](https://github.com/The12thAvenger/FbxImporter)
 - [FLVER_Editor](https://github.com/Pear0533/FLVER_Editor)

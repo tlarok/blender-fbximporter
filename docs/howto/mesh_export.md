@@ -18,7 +18,7 @@ Once the setup is loaded, the configuration will change, and you should see the 
 * **Prune Types**
 * **Write to Platform**
 
-<img width="1003" height="727" alt="Без имени-2" src="https://github.com/user-attachments/assets/cd46f059-4068-4455-8c78-2a5847edfbb5" />
+![filter manager](../assets/images/filter_manager.png)
 
 ## Step-by-step Setup
 
@@ -32,6 +32,6 @@ Once the setup is loaded, the configuration will change, and you should see the 
    * **[Thick Single Mesh](sim_thick_one_mesh.md)**
    * **[Two Mesh Simulation](sim_thick_two_mesh.md)**
 
-<img width="398" height="692" alt="image" src="https://github.com/user-attachments/assets/caca05a3-e7cf-4a51-bade-06ef16c6eb99" />
+![wizzard browser tab](../assets/images/wizzard_browser_tab.png)
 
-<img width="758" height="602" alt="Без имени-2" src="https://github.com/user-attachments/assets/e728bdc3-8468-492a-a291-a62b9ebc4b68" />
+![wizzard browser](../assets/images/wizzard_browser.png)

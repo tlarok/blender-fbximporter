@@ -1,6 +1,6 @@
 # Thick Simple Clothing Simulation (One Mesh)
 
-<img width="802" height="442" alt="Без имени-2" src="https://github.com/user-attachments/assets/162c1372-e7ba-4d92-9ca6-135396ba3ab7" />
+![thick clothing one mesh window pop up](../assets/images/thick(one_mesh).png)
 
 This clothing type uses a set mesh for simulation, where the vertices selected for deformation will be influenced by the simulated particles of the same mesh. When you select this option, a window will appear with the following options:
 

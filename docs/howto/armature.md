@@ -12,11 +12,11 @@ Next, prepare the mesh you are creating physics or clothing for. It must be rigg
 
 * Enable **Auto Normalize** in Blender in weight painting mode in settings in the right
 
-<img width="392" height="503" alt="image" src="https://github.com/user-attachments/assets/af97c2aa-41e0-4428-a9a0-27bfdcd75cbc" />
+![auto normilize setting](../assets/images/auto_normilize.png)
 
 * **Or** after finishing weight painting, go to **Weight Paint Mode → Weights → Normalize All**
 
-<img width="866" height="435" alt="image" src="https://github.com/user-attachments/assets/35262424-060e-4b06-bad2-9032a069699a" />
+![normilize manually](../assets/images/auto_normilize.png)
 
 There is also an option to use a **proxy/simulation mesh** (a simplified version of your model) for physics simulation and transfer its motion to the main mesh. This is useful if:
 

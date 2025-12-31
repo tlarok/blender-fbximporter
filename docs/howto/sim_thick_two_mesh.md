@@ -1,6 +1,6 @@
 # Thick Simple Clothing Simulation (Two Mesh)
 
-<img width="807" height="458" alt="Без имени-2" src="https://github.com/user-attachments/assets/291c7c6b-238e-4543-a81b-19db4ec3e326" />
+![thick clothing two mesh window pop up](../assets/images/thick(two_mesh).png)
 
 This clothing type uses a set of 2 meshes for simulation, where one is used for simulation and the another is used for deforming by the first. A window will appear with the following options:
 

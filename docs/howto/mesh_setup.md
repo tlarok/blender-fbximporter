@@ -22,7 +22,7 @@ To create them:
 4. Fill in the **Section Name**
 5. Press **Save UV Indices**
 
-<img width="927" height="637" alt="image" src="https://github.com/user-attachments/assets/35c8c081-eece-426f-b85e-20de68185158" />
+![particle selection](../assets/images/particle_set.png)
 
 This will create an entry in:
 
@@ -53,7 +53,7 @@ Available weight types:
 
 * Press a **Export Vertex Group(UV Oder)**
 
-<img width="1323" height="780" alt="image" src="https://github.com/user-attachments/assets/296a2af9-0eaa-46f6-9ec3-2359438d6ff2" />
+![vertex group exports](../assets/images/vertex_group_set.png)
 
 The data will be saved to:
 
@@ -73,7 +73,7 @@ Collidable shapes are used to restrict or guide movement. The following collidab
 * Convex Geometry
 * Convex Heightfield
 
-<img width="641" height="348" alt="image" src="https://github.com/user-attachments/assets/b371e5eb-c0d0-446b-bf74-4045e0e354ea" />
+![all types of colision](../assets/images/collidable_type.png)
 
 ### Notes on Collidables
 
@@ -89,7 +89,7 @@ Collidable shapes are used to restrict or guide movement. The following collidab
 * Assign a bone using the **Bone Selector** (if needed)
 * Press **Set Collision** to convert the mesh into the selected collision shape
 
-<img width="403" height="197" alt="Без имени-2" src="https://github.com/user-attachments/assets/d4baba8c-cd30-4bda-be92-35d43aea7548" />
+![Assigning Collidable type](../assets/images/Assigning_Collidables.png)
 
 If the object is already a collidable, it will be updated except a Bone Selector if already set.
 
@@ -98,9 +98,9 @@ When selecting an **armature**, a **Place Collidable** button appears:
 * Select **one bone** in Edit/Pose mode → create a **sphere**
 * Select **two bones** in Edit/Pose mode → create a **capsule**
 
-<img width="1068" height="434" alt="Без имени-2" src="https://github.com/user-attachments/assets/86e2cdd4-29a7-4d32-80a9-3f9e4423bd93" />
+![create sphere](../assets/images/create_sphere.png)
 
-<img width="993" height="413" alt="Без имени-2" src="https://github.com/user-attachments/assets/08b03816-e216-4881-a823-4fb0e6dea8dc" />
+![create capsule](../assets/images/create_capsule.png)
 
 ## Capsule Resizing
 
@@ -117,7 +117,7 @@ To resize the capsule:
 1. Toggle the desired controls (`Bottom`, `Middle`, and/or `Top`)
 2. Press **Resize Capsule** to apply the changes
 
-<img width="1716" height="546" alt="Без имени-2" src="https://github.com/user-attachments/assets/17b108b0-8f6f-4254-99aa-396f44da6166" />
+![resize capsule](../assets/images/resize_capsule.png)
 
 If the capsule's size choses is **uneven**, the collidable effectively becomes a **Tapered Capsule**.
 
