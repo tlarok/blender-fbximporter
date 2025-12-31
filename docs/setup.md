@@ -10,7 +10,7 @@ Start by configuring the tool and its core features.
 
 After installing the addon, you will see a new tab in the right tools sidebar (press `N` if you don’t see it) called **UV Tools**. Once opened, you will see the following two fields:
 
-<img width="737" height="122" alt="Без имени-2" src="https://github.com/user-attachments/assets/f39ae368-9b80-46d7-ad69-10e46e1b86ba" />
+![sidebar addon](assets/images/configuration.png)
 
 ### Standalone Filter Manager Path
 
