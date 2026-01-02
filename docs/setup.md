@@ -29,9 +29,6 @@ The path you saved earlier during the Havok installation is required here.
 In the **Standalone Filter Manager Path** field, **select** the file `hctStandAloneFilterManager.exe` located inside the folder:
 `Havok\HavokContentTools`
 
-Go to your Havok installation directory and select
-`hctStandAloneFilterManager.exe`.
-
 ### Export Path
 
 This is an optional directory where all your project files will be stored.

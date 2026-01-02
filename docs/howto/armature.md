@@ -16,7 +16,7 @@ Next, prepare the mesh you are creating physics or clothing for. It must be rigg
 
 * **Or** after finishing weight painting, go to **Weight Paint Mode → Weights → Normalize All**
 
-![normilize manually](../assets/images/auto_normilize.png)
+![normilize manually](../assets/images/normilize_all.png)
 
 There is also an option to use a **proxy/simulation mesh** (a simplified version of your model) for physics simulation and transfer its motion to the main mesh. This is useful if:
 
