@@ -19,7 +19,7 @@ Below are some common issues you may encounter during the process and how to res
 * **Non-normalized weight painting**:
   If the cloth mesh appears distorted or deformed in-game, the weight paint is likely not normalized. To fix this, check all display meshes and proxy models. Enter **Weight Paint Mode**, then use:
   **Weight → Normalize All**.
-  Afterward, re-export the scene, re-export the cloth, and re-import everything into FLVER.
+  Afterward, re-export the scene, re-import everything into FLVER, and re-export the cloth.
 
 ---
 
@@ -28,7 +28,7 @@ Below are some common issues you may encounter during the process and how to res
 * **Non-normalized weight painting**:
   If the mesh stretches or explodes in-game, the weight paint may not be normalized. This issue is usually easy to fix. Verify all display meshes and proxy models, enter **Weight Paint Mode**, and select:
   **Weight → Normalize All**.
-  Then re-export the scene, re-export the cloth, and re-import the display model into FLVER.
+  Then re-export the scene, re-import the display model into FLVER, and re-export the cloth.
 
 * **Missing weight painting**:
   If parts of the mesh have **no weight paint at all**, normalization will not fix the issue. Vertices without any bone influence can fly off or behave unpredictably in-game.
