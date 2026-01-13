@@ -11,7 +11,18 @@ Below are some common issues you may encounter during the process and how to res
   To avoid mismatches, in Blender select **all display meshes** that will be included in the FLVER **along with the armature**, then go to:
   **Object → Apply → All Transformations**.
   After that, re-import the model into FLVER and repeat the export process.
+  
+* **Incorrect Havok Installation**
+  If Havok is installed incorrectly, you may:
 
+	* Not see the **Cloth** option at all
+	* See the **Cloth** option highlighted in red
+	* See a warning similar to the image below
+
+	If any of these occur, Havok was installed incorrectly or a step was missed.
+	Return to the [setup](setup.md) guide and carefully repeat the installation steps.
+
+	![Wrongly installed Havok](../assets/images/broken_havok.png)
 ---
 
 ## 2. **Cloth Is Weirdly Deformed**
