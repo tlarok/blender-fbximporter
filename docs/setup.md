@@ -8,12 +8,12 @@
 
 ### Step 1: Install Havok
 
-1. **Install Havok** from the **Resources** link.
-2. Run the executable file to start the installation process. During the installation, **save the installation path** somewhere for future reference.
-3. After the installation, navigate to the folder `havok_contectool\New DLL` in the **Resources** folder and copy the two `.dll` files.
-4. Go to the previously saved Havok installation path and locate the directory:
+1. Download and install Havok using the executable provided in the **Resources** section. During installation, make sure to save the installation path for later use.
+2. After the installation is complete, open the `New DLL` folder included in the **Resources** ZIP archive and copy the provided `.dll` file.
+3. Navigate to the Havok installation directory and open the following folder path (or a similar one depending on your installation location):
    `Havok\HavokContentTools\filters`
-5. Paste the copied `.dll` files into this folder and **replace** the existing files when prompted.
+4. Paste the `.dll` file from the `New DLL` folder mentioned in *Step 2* into the filters folder.
+   If Windows asks for confirmation, choose *Replace the existing file*.
 
 ### Step 2: Configure the Tool
 

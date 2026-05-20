@@ -30,9 +30,18 @@ bl_info = {
 import bpy
 from fbx_importer.ui.panels import UVIndexExtractorPanel
 from fbx_importer.ui.properties import UVExportProperties, list_saved_files, CapsuleScaleProperties, CapsuleToolsProperties, CapsuleLengthProperties
-from fbx_importer.operators.exports import ExportVertexGroupWeightsOperator, UVIndexExtractorOperator, ExportFBXAndRunImporterOperator
+from fbx_importer import translations
+
+from fbx_importer.operators.exports import ExportFBXAndRunImporterOperator
 from fbx_importer.operators.utils import UVSelectVerticesFromFileOperator, UVDeleteFileOperator, UVRenameFileOperator, UVOpenFolderOperator
-from fbx_importer.operators.utils_collisions import CollidableCreateOperator, ResizeCapsuleOperator, placer, OBJECT_OT_toggle_capsule_length, collision_convtype
+from fbx_importer.operators.utils_collisions import ResizeCapsuleOperator, placer, OBJECT_OT_toggle_capsule_length, collision_convtype
+from fbx_importer.operators.open_scene import OpenExistingScene
+
+from fbx_importer.operators.json.vertex_group_export import ExportVertexGroupWeightsOperator
+from fbx_importer.operators.json.vertex_sets_export import UVIndexExtractorOperator
+from fbx_importer.operators.json.vertex_attribute_export import ExportVertexColorAttributeOperator
+
+from bpy.app.handlers import persistent
 
 
 classes = [
@@ -44,30 +53,34 @@ classes = [
     UVIndexExtractorPanel,
     ExportFBXAndRunImporterOperator,
     ResizeCapsuleOperator,
-    CollidableCreateOperator,
     placer,
     CapsuleLengthProperties, 
     OBJECT_OT_toggle_capsule_length,
     UVDeleteFileOperator,
     ExportVertexGroupWeightsOperator,
     CapsuleScaleProperties,
-    collision_convtype
+    collision_convtype,
+    OpenExistingScene,
+    ExportVertexColorAttributeOperator
 ]
 
+
 def register():
+    translations.register(__name__)
+
     # Register all classes
     for cls in classes:
-        try:
+        if not hasattr(bpy.types, cls.__name__):
             bpy.utils.register_class(cls)
-        except ValueError:
-            print(f"Class {cls.__name__} already registered")
     
     # Initialize properties
     bpy.types.Scene.uv_export_props = bpy.props.PointerProperty(type=UVExportProperties)
     bpy.types.Object.capsule_scale_props = bpy.props.PointerProperty(type=CapsuleScaleProperties)
     bpy.types.Scene.capsule_length_props = bpy.props.PointerProperty(type=CapsuleLengthProperties)
-
+    
 def unregister():
+    translations.unregister(__name__)
+    
     # Unregister all classes
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
@@ -76,6 +89,8 @@ def unregister():
     del bpy.types.Scene.uv_export_props
     del bpy.types.Object.capsule_scale_props
     del bpy.types.Scene.capsule_length_props
+    
+    # Remove this line - attribute doesn't exist
 
 if __name__ == "__main__":
     register()

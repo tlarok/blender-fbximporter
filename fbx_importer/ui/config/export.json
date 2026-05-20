@@ -1,0 +1,18 @@
+{
+    "fbx_export": {
+        "global_scale": 0.01,
+        "apply_unit_scale": true,
+        "apply_scale_options": "FBX_SCALE_NONE",
+        "use_space_transform": true,
+        "use_mesh_modifiers": true,
+        "mesh_smooth_type": "OFF",
+        "add_leaf_bones": false,
+        "primary_bone_axis": "Y",
+        "secondary_bone_axis": "X",
+        "use_armature_deform_only": false,
+        "bake_anim": true,
+        "path_mode": "AUTO",
+        "axis_forward": "-Z",
+        "axis_up": "Y"
+    }
+}

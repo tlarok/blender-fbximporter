@@ -29,7 +29,7 @@ After selecting the desired values, press **OK**. This will create a basic cloth
 
 ## Configuring the Cloth Simulation
 
-1. **Rename `Simulate` to `#01#`**
+1. **Rename `Simulate` to `#01#` inside `States`**
    If you're working with **Elden Ring** or **Elden Ring Nightreign**, right-click on **States**, and select **New** to create a new state. Rename it to **`#00#`**.
 
 2. **Adjust Skin Settings**
@@ -50,9 +50,9 @@ After selecting the desired values, press **OK**. This will create a basic cloth
 
    You may want to add optional constraints such as:
 
-   * **Bend Stiffness Constraints**: Prevents the cloth from folding.
-   * **Volume Constraints**: Attempts to preserve the original shape of the cloth.
-   * **Transition Constraints**: Smooths the transition between animated and simulated positions.
+   * **Bend Stiffness Constraints**: Stiffens the cloth during bending to reduce folding and excessive deformation.
+   * **Volume Constraints**: Attempts to preserve the original shape of the cloth by sharing vertex movement between connected vertices based on the assigned value (1 behaves similarly to a solid object).
+   * **Transition Constraints**: Smooths the transition between animated and simulated positions by reducing visible gaps or separation between connected parts during movement.
 
 6. **Add Constraints**
    Add **Bend Stiffness** to prevent cloth from self-colliding. For Elden Ring or Elden Ring Nightreign, also add **Transition Constraints**.

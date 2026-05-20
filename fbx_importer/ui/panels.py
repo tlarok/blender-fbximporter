@@ -11,7 +11,6 @@ class UVIndexExtractorPanel(bpy.types.Panel):
         layout = self.layout
         props = context.scene.uv_export_props
         obj = context.active_object
-        scene = context.scene
         
         if obj and obj.type == 'MESH':
             if not obj.name.startswith("collision_"):
@@ -26,48 +25,71 @@ class UVIndexExtractorPanel(bpy.types.Panel):
                 layout.operator("mesh.delete_uv_file", icon='FILE_REFRESH')
                 layout.operator("mesh.open_uv_folder", icon='FILE_FOLDER')
         
-        
-        
-        
             if obj.name.startswith("collision_capsule_"):
-                # Resizing controls
                 box = layout.box()
                 box.label(text="Resize Settings:")
                 
                 props_capsule = obj.capsule_scale_props
                 row = box.row()
-                row.prop(props_capsule, "scale_top", text="Bottom")
-                row.prop(props_capsule, "scale_center", text="Middle")
-                row.prop(props_capsule, "scale_bottom", text="Top")
-
+                row.prop(props_capsule, "scale_top", text="Top")
+                row.prop(props_capsule, "scale_bottom", text="Bottom")
                 layout.operator("mesh.resize_capsule", icon='MOD_ARRAY')
         
-        layout.separator()
-        layout.label(text="Collidable:")
-        layout.operator("import_scene.collidable_create", icon='IMPORT')
-        
         if obj and obj.type == 'ARMATURE':
+            layout.separator()
+            layout.label(text="Collidable:")
             layout.operator("place.place", icon='IMPORT')
         
         if obj and obj.type == 'MESH':
             layout.prop(props, "bone_name")
             layout.prop(props, "collision_type")
             layout.operator("mesh.collision_conv")
+            
             if obj.name.startswith("collision_capsule_"):
                 row = layout.row()
                 row.operator("object.toggle_capsule_length")
             elif not obj.name.startswith("collision_"):
                 box = layout.box()
                 box.label(text="Export Normalize:")
-
                 row = box.row()
                 row.prop(props, "clamp_min")
                 row.prop(props, "clamp_max")
-                layout.prop(props, "export_type", text="Weight Type")
-                layout.prop(props, "vertex_group_name")
-                layout.operator("mesh.export_vertex_group_weights", icon='EXPORT')
+                
+                layout.prop(props, "export_type", text="Float Type")
+                
+                layout.prop(props, "group_type", text="Data Type")
+                
+                if props.group_type == 'VERTEX_GROUP':
+                    layout.prop(props, "vertex_group_name")
+                    layout.operator("mesh.export_vertex_group_weights", icon='EXPORT')
+                elif props.group_type == 'VERTEX_COLOR':
+                    if obj and obj.type == 'MESH':
+                        # Filter: only POINT domain
+                        point_colors = [ca.name for ca in obj.data.color_attributes if ca.domain == 'POINT']
+
+                        if point_colors:
+                            # prop_search can’t filter inline, but prop_search works with color_attributes directly
+                            # user can pick the layer; we'll be validated later
+                            layout.prop_search(
+                                props,
+                                "vertex_color_name",
+                                obj.data,
+                                "color_attributes",
+                                text="Vertex Color"
+                            )
+                            layout.operator("mesh.export_vertex_color_atribute", icon='EXPORT')
+                        else:
+                            layout.label(text="No POINT vertex colors found", icon='ERROR')
+            
         
+        
+        # ========== GLOBAL EXPORT ==========
         layout.separator()
         layout.prop(props, "filterpath")
         layout.prop(props, "exportpath")
-        layout.operator("mesh.export_and_run_fbximporter", icon='EXPORT')
+        row1 = layout.row()
+        row1.operator("mesh.export_and_run_fbximporter", icon='EXPORT')
+        sub = row1.row(align=True)
+        sub.scale_x = 0.6 
+        sub.prop(props, "auto_normalize", text="Normalize")
+        layout.operator("mesh.open_existing_scene", icon='EXPORT')

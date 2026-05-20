@@ -1,0 +1,8 @@
+{
+    "filterpath": "",
+    "export_type": "DISTANCE",
+    "clamp_min": 0,
+    "clamp_max": 1,
+    "collision_type": "collision_convexgeom",
+    "filename": "sim"
+}
